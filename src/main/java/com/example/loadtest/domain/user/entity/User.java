@@ -1,4 +1,4 @@
-package com.example.loadtest.domain.member.entity;
+package com.example.loadtest.domain.user.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,8 +11,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "members")
-public class Member {
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // 자동 숫자 증가

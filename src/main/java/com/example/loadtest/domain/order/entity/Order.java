@@ -1,7 +1,7 @@
 package com.example.loadtest.domain.order.entity;
 
 
-import com.example.loadtest.domain.member.entity.Member;
+import com.example.loadtest.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,5 +28,5 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member member;
+    private User user;
 }
