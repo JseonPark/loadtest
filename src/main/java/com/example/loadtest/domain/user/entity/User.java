@@ -21,4 +21,10 @@ public class User {
     private String name;
     private String phone;
 
+    public static User create(String name, String phone) {
+        User user = new User();
+        user.name = name;
+        user.phone = phone;
+        return user;
+    }
 }
