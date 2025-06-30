@@ -4,10 +4,8 @@ package com.example.loadtest.domain.order.entity;
 import com.example.loadtest.domain.store.entity.Store;
 import com.example.loadtest.domain.user.entity.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -29,8 +27,6 @@ public class Order {
 
     private String status;
     private String menuSummary;
-
-
     private LocalDateTime orderTime;
 
     @Column(updatable = false)
