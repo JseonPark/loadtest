@@ -1,4 +1,4 @@
-package com.example.loadtest.domain.payment;
+package com.example.loadtest.domain.payment.entity;
 
 import com.example.loadtest.domain.order.entity.Order;
 import jakarta.persistence.*;
