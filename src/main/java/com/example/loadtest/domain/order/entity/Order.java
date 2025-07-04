@@ -35,15 +35,20 @@ public class Order {
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
-        this.orderTime = LocalDateTime.now();
         this.status = "ORDERED";
     }
 
-    public static Order create(User user, Store store, String menuSummary) {
+    public static Order create(User user, Store store, String menuSummary, LocalDateTime orderTime) {
+
+        if (user == null || store == null || menuSummary == null || orderTime == null) {
+            throw new IllegalArgumentException("필수값 누락");
+        }
+
         Order order = new Order();
         order.user = user;
         order.store = store;
         order.menuSummary = menuSummary;
+        order.orderTime = orderTime;
         return order;
     }
 }

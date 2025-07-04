@@ -2,9 +2,11 @@ package com.example.loadtest.domain.order.dto;
 
 import com.example.loadtest.domain.delivery.dto.DeliveryInfoDTO;
 import com.example.loadtest.domain.payment.dto.PaymentDTO;
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 public class OrderRequestDTO {
         private Long userId;
         private Long storeId;
