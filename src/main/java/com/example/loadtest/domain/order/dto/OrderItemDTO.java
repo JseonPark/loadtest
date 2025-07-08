@@ -7,4 +7,6 @@ public class OrderItemDTO {
     private Long menuId;
     private int quantity;
     private int price;
+
+    private String menuName;
 }
