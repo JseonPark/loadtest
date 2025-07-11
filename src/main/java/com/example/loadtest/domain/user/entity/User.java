@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -15,16 +17,29 @@ import lombok.Setter;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // 자동 숫자 증가
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private String phone;
+    private String email;
 
-    public static User create(String name, String phone) {
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    public User(String charlie, int i) {
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public static User create(String name, String phone, String email) {
         User user = new User();
         user.name = name;
         user.phone = phone;
+        user.email = email;
         return user;
     }
 }
