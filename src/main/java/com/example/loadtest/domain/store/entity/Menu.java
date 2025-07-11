@@ -19,6 +19,7 @@ public class Menu {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
     private String name;

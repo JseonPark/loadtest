@@ -1,5 +1,8 @@
-package com.example.loadtest.domain.payment.dto;
+package com.example.loadtest.domain.order.dto;
 
+import lombok.Getter;
+
+@Getter
 public class PaymentDTO {
     private String paymentMethod;
     private int menuTotal;

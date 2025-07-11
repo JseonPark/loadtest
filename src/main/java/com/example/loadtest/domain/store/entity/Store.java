@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "stores")
@@ -19,6 +21,9 @@ public class Store {
     private String name;
     private String address;
     private String phone;
+
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private List<Menu> menus = new ArrayList<>();
 
     private LocalDateTime createdAt;
 

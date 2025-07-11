@@ -18,9 +18,11 @@ public class OrderItem {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "menu_id", nullable = false)
     private Menu menu;
 
     private int quantity;
@@ -35,15 +37,17 @@ public class OrderItem {
         this.createdAt = LocalDateTime.now();
     }
 
-    public static OrderItem create(Order order, Menu menu, int quantity, int price) {
+    //== 생성 메서드 ==//
+    public static OrderItem create(Menu menu, int quantity) {
         OrderItem orderItem = new OrderItem();
-        orderItem.order = order;
         orderItem.menu = menu;
         orderItem.quantity = quantity;
-        orderItem.price = price;
+        orderItem.price = menu.getPrice(); // 주문 시점의 가격 스냅샷
         return orderItem;
     }
 
-
-
+    //== 연관관계 편의 메서드 ==//
+    void assignTo(Order order) {
+        this.order = order;
+    }
 }
