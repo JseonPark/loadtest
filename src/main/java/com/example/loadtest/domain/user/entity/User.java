@@ -27,8 +27,6 @@ public class User {
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    public User(String charlie, int i) {
-    }
 
     @PrePersist
     public void prePersist() {
