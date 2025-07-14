@@ -1,5 +1,6 @@
 package com.example.loadtest.domain.order.service;
 
+import com.example.loadtest.domain.order.dto.OrderItemDTO;
 import com.example.loadtest.domain.order.dto.OrderRequestDTO;
 import com.example.loadtest.domain.order.dto.OrderResponseDTO;
 import com.example.loadtest.domain.order.entity.*;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,13 +39,26 @@ public class OrderServiceImpl implements OrderService {
         Store store = storeRepository.findById(dto.getStoreId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 매장이 없습니다. id=" + dto.getStoreId()));
 
+
+        List<Long> menuIds = dto.getOrderItems().stream()
+                .map(OrderItemDTO::getMenuId)
+                .toList();
+
+        Map<Long, Menu> menuMap = menuRepository.findAllById(menuIds).stream()
+                .collect(Collectors.toMap(Menu::getId, Function.identity()));
+
+
         List<OrderItem> orderItems = dto.getOrderItems().stream()
                 .map(itemDto -> {
-                    Menu menu = menuRepository.findById(itemDto.getMenuId())
-                            .orElseThrow(() -> new IllegalArgumentException("해당 메뉴가 없습니다. id=" + itemDto.getMenuId()));
+                    Menu menu = menuMap.get(itemDto.getMenuId());
+                    if(menu == null) {
+                        throw new IllegalArgumentException("해당 메뉴가 없습니다. id=" + itemDto.getMenuId());
+                    }
                     return OrderItem.create(menu, itemDto.getQuantity());
                 })
                 .collect(Collectors.toList());
+
+
 
         Payment payment = Payment.create(
                 dto.getPayment().getPaymentMethod(),

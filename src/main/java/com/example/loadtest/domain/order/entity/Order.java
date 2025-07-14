@@ -71,16 +71,15 @@ public class Order {
     //== 생성 메서드 ==//
     public static Order create(User user, Store store, LocalDateTime orderTime, List<OrderItem> orderItems, Payment payment, DeliveryInfo deliveryInfo) {
 
-        if (user == null || store == null || orderItems == null || orderItems.isEmpty() || orderTime == null) {
+        if (user == null || store == null || orderItems == null || orderItems.isEmpty() || orderTime == null) { // null, isEmpty
             throw new IllegalArgumentException("필수값 누락");
         }
 
-        String mainMenuName = orderItems.get(0).getMenu().getName();
-        int others = orderItems.size() - 1;
+        String mainMenuName = orderItems.getFirst().getMenu().getName(); //quantity의 합으로 바꿔야 함. 불고기버거 외 0
+        int totalQuantity = orderItems.stream().mapToInt(OrderItem::getQuantity).sum();
 
-
-        String summary = (others > 0)
-                ? String.format("%s 외 %d건", mainMenuName, others)
+        String summary = (totalQuantity > 1)
+                ? String.format("%s 외 %d건", mainMenuName, totalQuantity)
                 : mainMenuName;
 
 
