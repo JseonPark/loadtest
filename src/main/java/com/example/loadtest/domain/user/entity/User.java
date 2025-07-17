@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Getter
@@ -25,12 +25,12 @@ public class User {
     private String email;
 
     @Column(updatable = false)
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
 
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = ZonedDateTime.now();
     }
 
     public static User create(String name, String phone, String email) {

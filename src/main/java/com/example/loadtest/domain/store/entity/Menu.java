@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "menus")
@@ -27,11 +27,11 @@ public class Menu {
     private String description;
     private boolean isActive;
 
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = ZonedDateTime.now();
     }
 
 }

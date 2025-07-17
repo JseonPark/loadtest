@@ -4,8 +4,12 @@ import lombok.Getter;
 
 @Getter
 public class DeliveryInfoDTO {
-    private String phoneNumber;
-    private String deliveryAddress;
-    private String messageToRider;
-    private String messageToStore;
+
+  private String phoneNumber;
+
+  private String deliveryAddress;
+
+  private String messageToRider;
+
+  private String messageToStore;
 }

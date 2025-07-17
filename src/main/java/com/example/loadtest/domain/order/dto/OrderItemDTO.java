@@ -4,9 +4,12 @@ import lombok.Getter;
 
 @Getter
 public class OrderItemDTO {
-    private Long menuId;
-    private int quantity;
-    private int price;
 
-    private String menuName;
+  private Long menuId;
+
+  private int quantity;
+
+  private int price;
+
+  private String menuName;
 }

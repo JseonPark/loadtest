@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "payments")
@@ -28,14 +28,15 @@ public class Payment {
     private int totalPaid;
 
     @Column(updatable = false)
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = ZonedDateTime.now();
     }
 
     //== 연관관계 편의 메서드 ==//
+    // package-private 접근제한자. Order 엔티티를 통해서만 호출되어야 한다.
     void assignToOrder(Order order) {
         this.order = order;
     }
