@@ -1,19 +1,17 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb  # 메모리에 임시로 생성되는 DB
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true  # 브라우저로 DB 직접 보기 가능
+    url: jdbc:mysql://localhost:3306/loadtest_db?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: "qkrwntjs"
   jpa:
     hibernate:
-      ddl-auto: update  # 엔티티 변경 시 DB 테이블도 같이 자동 업데이트
-    show-sql: true  # 실행되는 SQL 콘솔에 출력
+      ddl-auto: create # 애플리케이션 실행 시 스키마를 매번 새로 생성
+    show-sql: true
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
 
 logging:
   level:
