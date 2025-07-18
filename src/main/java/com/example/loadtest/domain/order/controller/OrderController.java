@@ -22,7 +22,7 @@ public class OrderController {
 
   @PostMapping
   public ResponseEntity<Void> createOrder(@RequestBody OrderRequestDTO requestDTO) {
-    Long orderId = orderService.createOrder(requestDTO);
+    long orderId = orderService.createOrder(requestDTO);
     URI location = URI.create("/api/orders/" + orderId);
     return ResponseEntity.created(location).build();
   }
