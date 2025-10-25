@@ -1,8 +1,8 @@
 package com.example.loadtest.domain.order.service;
 
+import com.example.loadtest.domain.order.dto.OrderHistoryResponseDTO;
 import com.example.loadtest.domain.order.dto.OrderItemDTO;
 import com.example.loadtest.domain.order.dto.OrderRequestDTO;
-import com.example.loadtest.domain.order.dto.OrderResponseDTO;
 import com.example.loadtest.domain.order.entity.*;
 import com.example.loadtest.domain.order.repository.OrderRepository;
 import com.example.loadtest.domain.store.entity.Menu;
@@ -12,6 +12,8 @@ import com.example.loadtest.domain.store.repository.StoreRepository;
 import com.example.loadtest.domain.user.entity.User;
 import com.example.loadtest.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,7 +84,9 @@ public class OrderService {
     }
 
 
-    public List<OrderResponseDTO> getOrders(Long userId) {
-        return List.of();
+    public Page<OrderHistoryResponseDTO> getOrdersByUserId(Long userId, Pageable pageable) {
+        Page<Order> ordersPage = orderRepository.findAllByUserId(userId, pageable);
+        return ordersPage.map(OrderHistoryResponseDTO::new);
     }
 }
+

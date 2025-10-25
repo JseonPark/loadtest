@@ -4,14 +4,15 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: "qkrwntjs"
+    hikari:
+      maximum-pool-size: 100
   jpa:
     hibernate:
-      ddl-auto: create # 애플리케이션 실행 시 스키마를 매번 새로 생성
-    show-sql: true
+      ddl-auto: update # 애플리케이션 실행 시 스키마를 매번 새로 생성
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.MySQLDialect
 
 logging:
   level:
