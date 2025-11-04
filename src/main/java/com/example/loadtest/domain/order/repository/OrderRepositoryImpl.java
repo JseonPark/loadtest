@@ -8,6 +8,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import static com.example.loadtest.domain.order.entity.QOrderItem.orderItem;
 import static com.example.loadtest.domain.store.entity.QMenu.menu;
 import static com.example.loadtest.domain.store.entity.QStore.store;
 
+@Repository
 @RequiredArgsConstructor
 public class OrderRepositoryImpl implements OrderRepositoryCustom{
 
