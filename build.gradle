@@ -33,8 +33,38 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // ==========================================
+    // Querydsl 의존성 추가 (Spring Boot 3+ 대응)
+    // ==========================================
+    // 1. querydsl-jpa (핵심 라이브러리, jakarta 버전 필수)
+    implementation 'com.querydsl:querydsl-jpa:5.1.0:jakarta'
+
+    // 2. querydsl-apt (Q-Type 생성을 위한 Annotation Processor, jakarta 버전 필수)
+    annotationProcessor 'com.querydsl:querydsl-apt:5.1.0:jakarta'
+
+    // 3. Annotation Processor가 JPA 어노테이션을 인식하도록
+    annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+    annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+    // ==========================================
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+// ==========================================
+// Querydsl Q-Type 생성 관련 설정
+// ==========================================
+// 1. Q-Type (Querydsl 모델)이 생성될 디렉토리 지정
+def generated = 'build/generated/sources/annotationProcessor/java/main'
+
+// 2. Gradle의 sourceSets에 생성된 Q-Type 디렉토리 추가
+sourceSets {
+    main.java.srcDirs += generated
+}
+
+// 3. 'clean' 태스크 실행 시 생성된 Q-Type 디렉토리도 삭제
+tasks.withType(Delete) {
+    delete generated
 }
