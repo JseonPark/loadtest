@@ -8,13 +8,24 @@ import java.time.ZonedDateTime;
 @Getter
 public class OrderHistoryResponseDTO {
 
-  private final String orderSummaryText;
-  private final String storeName;
-  private final String status;
-  private final ZonedDateTime orderTime;
-  private final int totalPrice;
-  private final int discountAmount;
-  private final int paidPrice;
+    private final String orderSummaryText;
+
+    private final String storeName;
+    private final String status;
+    private final ZonedDateTime orderTime;
+    private final int totalPrice;
+    private final int discountAmount;
+    private final int paidPrice;
+
+    public OrderHistoryResponseDTO(String orderSummaryText, String storeName, String status, ZonedDateTime orderTime, int totalPrice, int discountAmount, int paidPrice) {
+        this.orderSummaryText = orderSummaryText;
+        this.storeName = storeName;
+        this.status = status;
+        this.orderTime = orderTime;
+        this.totalPrice = totalPrice;
+        this.discountAmount = discountAmount;
+        this.paidPrice = paidPrice;
+    }
 
     public OrderHistoryResponseDTO(Order order) {
         this.orderSummaryText = order.getOrderSummaryText();
@@ -25,4 +36,6 @@ public class OrderHistoryResponseDTO {
         this.totalPrice = (order.getPayment() != null) ? order.getPayment().getTotalPaid() : 0;
         this.paidPrice = this.totalPrice - this.discountAmount;
     }
+
 }
+

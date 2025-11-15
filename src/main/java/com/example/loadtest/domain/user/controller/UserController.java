@@ -26,8 +26,13 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/orders")
-    public ResponseEntity<Page<OrderHistoryResponseDTO>> getOrdersByUserId(@PathVariable Long userId, Pageable pageable) {
-        return ResponseEntity.ok(orderService.getOrdersByUserId(userId, pageable));
+    public ResponseEntity<Page<OrderHistoryResponseDTO>> getOrdersByUserId(
+            @PathVariable Long userId,
+            Pageable pageable,
+            @RequestParam(required = false) String menuName,
+            @RequestParam(required = false) String storeName
+    ) {
+        return ResponseEntity.ok(orderService.getOrdersByUserId(userId, pageable, menuName, storeName));
     }
 
 }

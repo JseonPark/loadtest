@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 import static com.example.loadtest.domain.order.entity.QOrder.order;
 import static com.example.loadtest.domain.order.entity.QOrderItem.orderItem;
+import static com.example.loadtest.domain.order.entity.QPayment.payment;
 import static com.example.loadtest.domain.store.entity.QMenu.menu;
 import static com.example.loadtest.domain.store.entity.QStore.store;
 
@@ -30,16 +31,21 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom{
   public Page<OrderHistoryResponseDTO> searchOrders(Long userId, String storeName, String menuName, Pageable pageable) {
     List<OrderHistoryResponseDTO> content = queryFactory
         .select(Projections.constructor(OrderHistoryResponseDTO.class,
-            order.id,
-            store.name,
             order.orderSummaryText,
-            order.orderTime))
+            store.name,
+            order.status,
+            order.orderTime,
+            payment.menuTotal.add(payment.deliveryFee),
+            payment.discountAmount,
+            payment.totalPaid
+        ))
         .from(order)
         .join(order.store, store)
+        .leftJoin(order.payment, payment)
         .where(
               order.user.id.eq(userId),
               storeNameContains(storeName),
-            menuNameContains(menuName)
+              menuNameContains(menuName)
         )
         .orderBy(order.orderTime.desc())
         .offset(pageable.getOffset())
@@ -49,6 +55,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom{
     Long total = queryFactory
         .select(order.count())
         .from(order)
+        .join(order.store, store)
         .where(
                 order.user.id.eq(userId),
                 storeNameContains(storeName),

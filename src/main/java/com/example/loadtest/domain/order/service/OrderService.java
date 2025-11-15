@@ -84,9 +84,9 @@ public class OrderService {
     }
 
 
-    public Page<OrderHistoryResponseDTO> getOrdersByUserId(Long userId, Pageable pageable) {
-        Page<Order> ordersPage = orderRepository.findAllByUserId(userId, pageable);
-        return ordersPage.map(OrderHistoryResponseDTO::new);
+    public Page<OrderHistoryResponseDTO> getOrdersByUserId(Long userId, Pageable pageable, String menuName, String storeName) {
+        return orderRepository.searchOrders(userId, storeName, menuName, pageable);
+
     }
 }
 
