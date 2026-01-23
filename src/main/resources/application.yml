@@ -4,7 +4,7 @@ spring:
     #username: "root"
     #password: "!@Adlqhdekfl12"
     hikari:
-      maximum-pool-size: 30
+      maximum-pool-size: 25
   jpa:
     hibernate:
       ddl-auto: update
