@@ -45,6 +45,8 @@ jobs:
         username: ${{ secrets.GCP_USER }}
         key: ${{ secrets.GCP_SSH_KEY }}
         script: |
+
+          set -x
           # 기존 서버 킬 (8080 포트)
           sudo fuser -k -n tcp 8080 || true
           ~/start.sh
