@@ -49,7 +49,7 @@ jobs:
           set -x
           # 기존 서버 킬 (8080 포트)
           sudo fuser -k -n tcp 8080 || true
-          ~/start.sh
+          ~/start.sh > /dev/null 2>&1 &
           
           # 파일 이름 정리 (버전 붙은 이름을 app.jar로) -> bootjar 설정함. 
           # mv /home/${{ secrets.GCP_USER }}/demo-0.0.1-SNAPSHOT.jar /home/${{ secrets.GCP_USER }}/LoadTest.jar
