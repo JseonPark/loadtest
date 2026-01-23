@@ -23,6 +23,12 @@ repositories {
     mavenCentral()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom "com.google.cloud:spring-cloud-gcp-dependencies:5.3.0"
+    }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -67,4 +73,9 @@ sourceSets {
 // 3. 'clean' 태스크 실행 시 생성된 Q-Type 디렉토리도 삭제
 tasks.withType(Delete) {
     delete generated
+}
+
+bootJar {
+    // 이렇게 하면 무조건 app.jar로 생성됩니다. (버전 정보 제거)
+    archiveFileName = 'LoadTest.jar'
 }
