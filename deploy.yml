@@ -1,0 +1,58 @@
+name: Deploy to GCP
+
+on:
+  push:
+    branches: [ "main" ] # main 브랜치에 푸시될 때만 실행
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. 코드 가져오기
+    - uses: actions/checkout@v3
+
+    # 2. 자바(JDK 17) 세팅하기 (본인 프로젝트 버전에 맞게 수정)
+    - name: Set up JDK 21
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    # 3. 권한 부여 및 빌드 (테스트 포함)
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew clean bootJar
+
+    # 4. 서버로 JAR 파일 전송 (SCP)
+    - name: Copy JAR to GCP
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.GCP_HOST }}
+        username: ${{ secrets.GCP_USER }}
+        key: ${{ secrets.GCP_SSH_KEY }}
+        source: "build/libs/*.jar"
+        target: "/home/${{ secrets.GCP_USER }}/"
+        strip_components: 2 # build/libs 경로 떼고 파일만 전송
+
+    # 5. 서버 접속해서 실행 (SSH)
+    - name: Deploy to Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.GCP_HOST }}
+        username: ${{ secrets.GCP_USER }}
+        key: ${{ secrets.GCP_SSH_KEY }}
+        script: |
+          # 기존 서버 킬 (8080 포트)
+          sudo fuser -k -n tcp 8080 || true
+          ~/start.sh
+          
+          # 파일 이름 정리 (버전 붙은 이름을 app.jar로) -> bootjar 설정함. 
+          # mv /home/${{ secrets.GCP_USER }}/demo-0.0.1-SNAPSHOT.jar /home/${{ secrets.GCP_USER }}/LoadTest.jar
+          
+          # 실행 (로그는 끄고 실행)
+          # nohup java -jar /home/${{ secrets.GCP_USER }}/app.jar > /home/${{ secrets.GCP_USER }}/app.log 2>&1 &
+          
+          echo "🚀 배포가 완료되었습니다!"
