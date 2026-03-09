@@ -1,4 +1,8 @@
 spring:
+
+  application:
+    name: load-test-api
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #username: "root"
@@ -38,3 +42,6 @@ management:
   endpoint:
     prometheus:
       enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
