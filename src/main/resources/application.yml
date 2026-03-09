@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: load-test-api  # 앱 이름 (원하시는 이름으로 설정)
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #username: "root"
@@ -38,3 +40,6 @@ management:
   endpoint:
     prometheus:
       enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}  # 이 두 줄이 핵심 해결책입니다!
