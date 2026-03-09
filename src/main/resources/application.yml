@@ -42,4 +42,4 @@ management:
       enabled: true
   metrics:
     tags:
-      application: ${spring.application.name}  # 이 두 줄이 핵심 해결책입니다!
+      application: ${spring.application.name}
