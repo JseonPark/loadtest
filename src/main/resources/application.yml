@@ -24,6 +24,11 @@ logging:
     org.hibernate.SQL: OFF
     #org.hibernate.type: trace
 
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true # Tomcat의 내부 메트릭을 JMX에 등록하여 Micrometer가 읽을 수 있게 함.
+
 management:
   endpoints:
     web:
