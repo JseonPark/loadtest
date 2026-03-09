@@ -23,3 +23,13 @@ logging:
     com.zaxxer.hikari: DEBUG
     org.hibernate.SQL: OFF
     #org.hibernate.type: trace
+
+management:
+  endpoints:
+    web:
+      exposure:
+        #prometheus,health,metrics 등 모니터링에 필요한 엔드포인트 개방
+        include: prometheus, health, info, metrics
+  endpoint:
+    prometheus:
+      enabled: true
