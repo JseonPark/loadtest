@@ -1,6 +1,8 @@
 spring:
+
   application:
-    name: load-test-api  # 앱 이름 (원하시는 이름으로 설정)
+    name: load-test-api
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #username: "root"
