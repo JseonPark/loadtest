@@ -7,6 +7,7 @@ spring:
     #password: "!@Adlqhdekfl12"
     hikari:
       maximum-pool-size: 25
+      connection-timeout: 3000  # 3초 만에 연결 안 되면 포기!
   jpa:
     hibernate:
       ddl-auto: update
