@@ -1,8 +1,6 @@
 spring:
-
   application:
     name: load-test-api
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #username: "root"
@@ -20,16 +18,21 @@ spring:
    # web:
      # pageable:
         #max-page-size: 1000000
-
 logging:
   level:
     root : ERROR
     com.zaxxer.hikari: DEBUG
     org.hibernate.SQL: OFF
     #org.hibernate.type: trace
-
 server:
   tomcat:
+    accesslog:
+      enabled: true
+      directory: /tmp/tomcat-logs # 로그가 저장될 경로
+      prefix: access_log
+      suffix: .log
+      # 어떤 정보를 남길지 패턴 지정 (IP, 요청시간, 응답코드, 소요시간 등)
+      pattern: "%h %l %u %t \"%r\" %s %b %D"
     mbeanregistry:
       enabled: true # Tomcat의 내부 메트릭을 JMX에 등록하여 Micrometer가 읽을 수 있게 함.
 
